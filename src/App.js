@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {initialData,FetchingRequest} from "./practice/actions/PostAction";
-import {Col,Row,Container,Table} from "react-bootstrap";
+import {Col,Row,Container,Table,Button,Form} from "react-bootstrap";
 import { connect } from "react-redux";
 
 
@@ -17,7 +17,7 @@ class App extends Component {
           id:null
       }
         this.onChangesearchHandler = this.onChangesearchHandler.bind(this);
-
+        this.Backtopage = this.Backtopage.bind(this);
     }
 
     componentDidMount() {
@@ -30,9 +30,17 @@ class App extends Component {
         this.setState({
           displaydata:ALldisplaydata,
         })
-    }, 1000);   
+    }, 500);   
 }
 
+
+   Backtopage(){
+      this.props.dispatch(initialData());
+       this.setState({
+             mainpage: false,
+             deatilpage:false,
+       })
+   }
 
     onChangesearchHandler(event) {
            console.log("evenet",event.target.value)
@@ -95,7 +103,11 @@ class App extends Component {
               <Container>
                     <Row>
                         <div className={this.state.mainpage ? "maindiv":""}>
-                          <input type="text" placeholder="enter title Name" onChange={this.onChangesearchHandler}  /> 
+                          <Form.Group controlId="Title">
+                                <Form.Label>Title</Form.Label>
+                                <Form.Control type="text" placeholder="enter Title Name"  onChange={this.onChangesearchHandler}/>
+                            </Form.Group>
+                         
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
@@ -112,6 +124,8 @@ class App extends Component {
                          </div>
 
                           <div className={this.state.deatilpage? "deatilpage":"displayhide"}>
+                          <Button onClick={this.Backtopage}>Back</Button>
+
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
